@@ -3,10 +3,9 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { colors } from '../src/theme';
-import { useAuthStore } from '../src/store';
 import AppNavigator from '../src/navigation/AppNavigator';
 
-export default function RootLayout() {
+export default function App() {
   const [ready, setReady] = useState(false);
   useEffect(() => { setTimeout(() => setReady(true), 800); }, []);
 

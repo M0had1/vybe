@@ -17,14 +17,10 @@
       "package": "com.vybe.app",
       "adaptiveIcon": { "backgroundColor": "#0A0A0F" }
     },
-    "web": {
-      "bundler": "metro"
-    },
     "extra": {
       "eas": {
         "projectId": "3d64cedb-f479-4bf8-87e2-155d1a850b58"
       }
-    },
-    "plugins": ["expo-router"]
+    }
   }
 }
