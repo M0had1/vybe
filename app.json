@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Vybe",
+    "slug": "vybe",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": { "backgroundColor": "#0A0A0F" },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.vybe.app",
+      "cameraPermission": "Vybe needs camera to capture moments"
+    },
+    "android": {
+      "package": "com.vybe.app",
+      "permissions": ["CAMERA", "RECORD_AUDIO"]
+    },
+    "plugins": ["expo-camera", "expo-image-picker", "expo-secure-store"]
+  }
+}
