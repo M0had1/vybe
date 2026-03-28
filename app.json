@@ -6,8 +6,11 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
-    "scheme": "vybe",
-    "splash": { "backgroundColor": "#0A0A0F" },
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#0A0A0F",
+      "resizeMode": "contain"
+    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
@@ -15,7 +18,10 @@
     },
     "android": {
       "package": "com.vybe.app",
-      "adaptiveIcon": { "backgroundColor": "#0A0A0F" }
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0A0A0F"
+      }
     },
     "extra": {
       "eas": {
