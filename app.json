@@ -6,17 +6,25 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
+    "scheme": "vybe",
     "splash": { "backgroundColor": "#0A0A0F" },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.vybe.app",
-      "cameraPermission": "Vybe needs camera to capture moments"
+      "bundleIdentifier": "com.vybe.app"
     },
     "android": {
       "package": "com.vybe.app",
-      "permissions": ["CAMERA", "RECORD_AUDIO"]
+      "adaptiveIcon": { "backgroundColor": "#0A0A0F" }
     },
-    "plugins": ["expo-camera", "expo-image-picker", "expo-secure-store"]
+    "web": {
+      "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "will-be-set-after-eas-init"
+      }
+    },
+    "plugins": ["expo-router"]
   }
 }
