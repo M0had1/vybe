@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'react-native-uuid';
+// Mock data for Vybe
 
 // ============================================
 // MOCK USERS

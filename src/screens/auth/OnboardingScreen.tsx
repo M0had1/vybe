@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Animated, Dimensions, StatusBar, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, radius, font, spacing } from '../../theme';
+import { colors, radius, font } from '../../theme';
 import { useAuthStore } from '../../store';
 
 const { width, height } = Dimensions.get('window');
@@ -13,22 +13,11 @@ export default function OnboardingScreen({ navigation }: any) {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [name, setName] = useState('');
-  const fade = useRef(new Animated.Value(1)).current;
-
-  const nextStep = () => {
-    Animated.sequence([
-      Animated.timing(fade, { toValue: 0, duration: 200, useNativeDriver: true }),
-      Animated.timing(fade, { toValue: 1, duration: 200, useNativeDriver: true }),
-    ]).start();
-    setTimeout(() => setStep(step + 1), 200);
-  };
 
   const handleLogin = () => { login(); };
 
   return (
     <View style={[s.container, { paddingTop: insets.top }]}>
-      <StatusBar style="light" />
-      {/* Animated orbs */}
       <View style={s.bgOrbs}>
         <View style={[s.orb, { backgroundColor: colors.primary, top: -60, right: -80, width: 280, height: 280, borderRadius: 140 }]} />
         <View style={[s.orb, { backgroundColor: colors.accent, bottom: 80, left: -60, width: 220, height: 220, borderRadius: 110 }]} />
@@ -36,13 +25,13 @@ export default function OnboardingScreen({ navigation }: any) {
       </View>
 
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
-        <Animated.View style={[s.content, { opacity: fade, paddingTop: height * 0.12 }]}>
+        <View style={[s.content, { paddingTop: height * 0.12 }]}>
           {step === 0 && (
             <>
               <Text style={s.logo}>✨</Text>
               <Text style={s.brand}>Vybe</Text>
               <Text style={s.tagline}>Your space. Your people. Your rules.</Text>
-              <TouchableOpacity onPress={nextStep} style={s.cta}><Text style={s.ctaText}>Get Started</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => setStep(1)} style={s.cta}><Text style={s.ctaText}>Get Started</Text></TouchableOpacity>
               <TouchableOpacity onPress={handleLogin} style={s.skipBtn}><Text style={s.skipText}>Already have an account? Sign in</Text></TouchableOpacity>
             </>
           )}
@@ -52,7 +41,7 @@ export default function OnboardingScreen({ navigation }: any) {
               <Text style={s.stepTitle}>Your phone number</Text>
               <Text style={s.stepSub}>We'll send you a code to verify</Text>
               <TextInput style={s.input} placeholder="+1 (555) 000-0000" placeholderTextColor={colors.textTertiary} value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
-              <TouchableOpacity onPress={nextStep} style={[s.cta, !phone && s.ctaDisabled]} disabled={!phone}><Text style={s.ctaText}>Send Code</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => setStep(2)} style={[s.cta, !phone && s.ctaDisabled]} disabled={!phone}><Text style={s.ctaText}>Send Code</Text></TouchableOpacity>
             </>
           )}
 
@@ -60,8 +49,8 @@ export default function OnboardingScreen({ navigation }: any) {
             <>
               <Text style={s.stepTitle}>Enter the code</Text>
               <Text style={s.stepSub}>Sent to {phone || '+1 ••• ••• ••00'}</Text>
-              <TextInput style={s.input} placeholder="• • • • • •" placeholderTextColor={colors.textTertiary} value={otp} onChangeText={setOtp} keyboardType="number-pad" maxLength={6} />
-              <TouchableOpacity onPress={nextStep} style={[s.cta, !otp && s.ctaDisabled]} disabled={!otp}><Text style={s.ctaText}>Verify</Text></TouchableOpacity>
+              <TextInput style={s.input} placeholder="123456" placeholderTextColor={colors.textTertiary} value={otp} onChangeText={setOtp} keyboardType="number-pad" maxLength={6} />
+              <TouchableOpacity onPress={() => setStep(3)} style={[s.cta, !otp && s.ctaDisabled]} disabled={!otp}><Text style={s.ctaText}>Verify</Text></TouchableOpacity>
             </>
           )}
 
@@ -70,7 +59,7 @@ export default function OnboardingScreen({ navigation }: any) {
               <Text style={s.stepTitle}>What should we call you?</Text>
               <Text style={s.stepSub}>This is how your friends will see you</Text>
               <TextInput style={s.input} placeholder="Your name" placeholderTextColor={colors.textTertiary} value={name} onChangeText={setName} />
-              <TouchableOpacity onPress={nextStep} style={[s.cta, !name && s.ctaDisabled]} disabled={!name}><Text style={s.ctaText}>Continue</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => setStep(4)} style={[s.cta, !name && s.ctaDisabled]} disabled={!name}><Text style={s.ctaText}>Continue</Text></TouchableOpacity>
             </>
           )}
 
@@ -94,7 +83,7 @@ export default function OnboardingScreen({ navigation }: any) {
               </View>
             </>
           )}
-        </Animated.View>
+        </View>
       </KeyboardAvoidingView>
     </View>
   );
@@ -111,7 +100,7 @@ const s = StyleSheet.create({
   stepTitle: { fontSize: font.xxl, fontWeight: '800', color: colors.text, marginBottom: 8, textAlign: 'center' },
   stepSub: { fontSize: font.md, color: colors.textSecondary, textAlign: 'center', marginBottom: 32 },
   input: { width: '100%', backgroundColor: colors.surface, borderRadius: radius.xl, borderWidth: 1, borderColor: colors.border, paddingHorizontal: 20, paddingVertical: 16, color: colors.text, fontSize: font.lg, textAlign: 'center', marginBottom: 24, letterSpacing: 2 },
-  cta: { width: '100%', backgroundColor: colors.primary, borderRadius: radius.xl, paddingVertical: 16, alignItems: 'center', marginBottom: 16, shadowColor: colors.primary, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 16, elevation: 8 },
+  cta: { width: '100%', backgroundColor: colors.primary, borderRadius: radius.xl, paddingVertical: 16, alignItems: 'center', marginBottom: 16 },
   ctaDisabled: { opacity: 0.4 },
   ctaText: { color: '#FFF', fontSize: font.lg, fontWeight: '700' },
   skipBtn: { padding: 12 },
